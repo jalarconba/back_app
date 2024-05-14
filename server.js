@@ -31,17 +31,27 @@ app.get('/usuarios', async (req, res) => {
 });
 
 // Ruta para actualizar un alumno
-app.put('/alumnos/:id', async (req, res) => {
-    const { id } = req.params;
-    const { rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso } = req.body;
-    try {
-        const result = await pool.query('UPDATE alumno SET rut = $1, nombres = $2, apellido_paterno = $3, apellido_materno = $4, correo_electronico = $5, curso = $6 WHERE id = $7', [rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso, id]);
-        res.json({ message: 'Alumno actualizado correctamente' });
-    } catch (err) {
-        console.error('Error al actualizar alumno:', err);
-        res.status(500).send('Error al actualizar alumno');
-    }
-});
+const update = () => {
+    app.put("http://localhost:3002/update", {
+      id: id,
+      rut: rut,
+      nombres: nombres, 
+      apellido_paterno: apellidoPaterno, 
+      apellido_materno: apellidoMaterno, 
+      correo_electronico: correoElectronico,
+      curso: curso
+    })
+    .then((response) => {
+      console.log("Respuesta del servidor al actualizar:", response);
+      getAlumnos();
+      alert("Alumno actualizado");
+      setEditar(false);
+    })
+    .catch((error) => {
+      console.error("Error al actualizar alumno:", error);
+      alert("Error al actualizar Alumno");
+    });
+  }
 
 // Ruta para eliminar un alumno
 app.delete('/alumnos/:id', async (req, res) => {

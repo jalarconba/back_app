@@ -19,51 +19,59 @@ app.get('/alumnos', async (req, res) => {
     }
 });
 
-// Ruta para obtener todos los usuarios
-app.get('/usuarios', async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM usuario;');
-        res.json(result.rows);
-    } catch (err) {
-        console.error('Error al consultar la base de datos:', err);
-        res.status(500).send('Error al obtener los usuarios');
-    }
+// Ruta para crear un nuevo alumno
+app.post("/create", (req, res) => {
+    const { rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso } = req.body;
+
+    pool.query('INSERT INTO alumno (rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso) VALUES (?, ?, ?, ?, ?, ?)', 
+    [rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso], (err, result) => {
+        if (err) {
+            console.error("Error al crear alumno:", err);
+            res.status(500).json({ message: 'Error al crear alumno' });
+        } else {
+            console.log("Alumno creado:", result);
+            res.status(201).json({ message: 'Alumno creado correctamente' });
+        }
+    });
 });
 
 // Ruta para actualizar un alumno
-const update = () => {
-    app.put("http://localhost:3002/update", {
-      id: id,
-      rut: rut,
-      nombres: nombres, 
-      apellido_paterno: apellidoPaterno, 
-      apellido_materno: apellidoMaterno, 
-      correo_electronico: correoElectronico,
-      curso: curso
-    })
-    .then((response) => {
-      console.log("Respuesta del servidor al actualizar:", response);
-      getAlumnos();
-      alert("Alumno actualizado");
-      setEditar(false);
-    })
-    .catch((error) => {
-      console.error("Error al actualizar alumno:", error);
-      alert("Error al actualizar Alumno");
+app.put("/update", (req, res) => {
+    const { id, rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso } = req.body;
+
+    pool.query('UPDATE alumno SET rut = ?, nombres = ?, apellido_paterno = ?, apellido_materno = ?, correo_electronico = ?, curso = ? WHERE id = ?', 
+    [rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso, id], (err, result) => {
+        if (err) {
+            console.error("Error al actualizar alumno:", err);
+            res.status(500).json({ message: 'Error al actualizar alumno' });
+        } else {
+            console.log("Alumno actualizado:", result);
+            res.status(200).json({ message: 'Alumno actualizado correctamente' });
+        }
     });
-  }
+});
 
 // Ruta para eliminar un alumno
-app.delete('/alumnos/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const result = await pool.query('DELETE FROM alumno WHERE id = $1', [id]);
-        res.json({ message: 'Alumno eliminado correctamente' });
-    } catch (err) {
-        console.error('Error al eliminar alumno:', err);
-        res.status(500).send('Error al eliminar alumno');
-    }
+app.delete("/delete/:id", (req, res) => {
+    const id = req.params.id;
+
+    pool.query('DELETE FROM alumno WHERE id = ?', [id], (err, result) => {
+        if (err) {
+            console.error("Error al eliminar alumno:", err);
+            res.status(500).json({ message: 'Error al eliminar alumno' });
+        } else {
+            console.log("Alumno eliminado:", result);
+            res.status(200).json({ message: 'Alumno eliminado correctamente' });
+        }
+    });
 });
+
+// Inicio del servidor
+app.listen(PORT, () => {
+    console.log('El servidor está encendido en el puerto ' + PORT);
+});
+
+
 
 // Inicio del servidor
 app.listen(PORT, () => {

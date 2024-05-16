@@ -2,9 +2,9 @@ import pg from "pg"
 
 const pool = new pg.Pool({
     host:'dpg-cp2o4g21hbls7381qot0-a',
-    user:'postgres',
+    user:'asistencia_up7g_user',
     port:5432,
-    password:'asistencia_up7g_user',
+    password:'zUEFUu2J8g92bRFx8Mau4uUh7INAynqD',
     database:'asistencia_up7g',
     allowExitOnIdle: true,
 })

@@ -18,6 +18,15 @@ app.get('/alumnos', async (req, res) => {
         res.status(500).send('Error al obtener los alumnos');
     }
 });
+// Ruta para obtener todos los usuarios
+app.get('/usuarios', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM usuarios;');
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error al consultar la base de datos:', err);
+        res.status(500).send('Error al obtener los usuarios');
+    }
 
 // Ruta para crear un nuevo alumno
 app.post("/create", (req, res) => {

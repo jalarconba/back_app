@@ -7,7 +7,7 @@ const pool = new pg.Pool({
     password: 'zUEFUu2J8g92bRFx8Mau4uUh7INAynqD',
     database: 'asistencia_up7g', // Nombre de la base de datos
     allowExitOnIdle: true,
-    ssl: true // Asegúrate de que la configuración SSL sea correcta
+    
 });
 
 export default pool;

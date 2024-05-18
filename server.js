@@ -19,6 +19,15 @@ app.get('/alumnos', async (req, res) => {
     }
 });
 // Ruta para obtener todos los usuarios
+app.get('/apoderados', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM apoderados;');
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error al consultar la base de datos:', err);
+        res.status(500).send('Error al obtener los apoderados');
+    }
+// Ruta para obtener todos los usuarios
 app.get('/usuarios', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM usuarios;');

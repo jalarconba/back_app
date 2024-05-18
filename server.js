@@ -37,7 +37,7 @@ app.post("/create", (req, res) => {
 
 // Ruta para actualizar un alumno
 app.put("/update", (req, res) => {
-    const { id, rut, nombres, apellido_paterno, apellido_materno, correo_electronico,fecha_nacimiento curso } = req.body;
+    const { id, rut, nombres, apellido_paterno, apellido_materno, correo_electronico,fecha_nacimiento, curso } = req.body;
 
     pool.query('UPDATE alumnos SET rut = ?, nombres = ?, apellido_paterno = ?, apellido_materno = ?, correo_electronico = ?, fecha_nacimiento = ?, curso = ? WHERE id = ?', 
     [rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso, id], (err, result) => {

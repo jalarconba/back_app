@@ -73,7 +73,4 @@ app.listen(PORT, () => {
 
 
 
-// Inicio del servidor
-app.listen(PORT, () => {
-    console.log('El servidor está encendido en el puerto ' + PORT);
-});
+

@@ -23,8 +23,8 @@ app.get('/alumnos', async (req, res) => {
 app.post("/create", (req, res) => {
     const { rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso } = req.body;
 
-    pool.query('INSERT INTO alumnos (rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso) VALUES (?, ?, ?, ?, ?, ?)', 
-    [rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso], (err, result) => {
+    pool.query('INSERT INTO alumnos (rut, nombres, apellido_paterno, apellido_materno, correo_electronico,fecha_nacimiento, curso) VALUES (?, ?, ?, ?, ?, ?,?)', 
+    [rut, nombres, apellido_paterno, apellido_materno, correo_electronico,fecha_nacimiento, curso], (err, result) => {
         if (err) {
             console.error("Error al crear alumno:", err);
             res.status(500).json({ message: 'Error al crear alumno' });
@@ -37,7 +37,7 @@ app.post("/create", (req, res) => {
 
 // Ruta para actualizar un alumno
 app.put("/update", (req, res) => {
-    const { id, rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso } = req.body;
+    const { id, rut, nombres, apellido_paterno, apellido_materno, correo_electronico,fecha_nacimiento curso } = req.body;
 
     pool.query('UPDATE alumnos SET rut = ?, nombres = ?, apellido_paterno = ?, apellido_materno = ?, correo_electronico = ?, curso = ? WHERE id = ?', 
     [rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso, id], (err, result) => {

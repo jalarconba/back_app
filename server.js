@@ -18,7 +18,7 @@ app.get('/alumnos', async (req, res) => {
         res.status(500).send('Error al obtener los alumnos');
     }
 });
-// Ruta para obtener todos los usuarios
+// Ruta para obtener todos los apoderados
 app.get('/apoderados', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM apoderados;');

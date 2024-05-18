@@ -39,7 +39,7 @@ app.post("/create", (req, res) => {
 app.put("/update", (req, res) => {
     const { id, rut, nombres, apellido_paterno, apellido_materno, correo_electronico,fecha_nacimiento curso } = req.body;
 
-    pool.query('UPDATE alumnos SET rut = ?, nombres = ?, apellido_paterno = ?, apellido_materno = ?, correo_electronico = ?, curso = ? WHERE id = ?', 
+    pool.query('UPDATE alumnos SET rut = ?, nombres = ?, apellido_paterno = ?, apellido_materno = ?, correo_electronico = ?, fecha_nacimiento = ?, curso = ? WHERE id = ?', 
     [rut, nombres, apellido_paterno, apellido_materno, correo_electronico, curso, id], (err, result) => {
         if (err) {
             console.error("Error al actualizar alumno:", err);

@@ -12,11 +12,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.9.7",
+=======
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+>>>>>>> 400d71548268cafe63b50eb5ab48d43b30433b61
     "nodemon": "^3.1.0",
     "pg": "^8.11.5"
   }

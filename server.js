@@ -8,6 +8,26 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
 
+
+
+// middleware de autenticación
+const requireLogin = (req, res, next) => {
+    // verifica si el usuario tiene una sesión activa
+    if (req.session && req.session.user) {
+        // si el usuario tiene una sesión activa, permite el acceso a la siguiente ruta
+        next();
+    } else {
+        // si el usuario no tiene una sesión activa, redirige al inicio de sesión
+        res.redirect('/login');
+    }
+};
+
+// Aplica el middleware de autenticación a las rutas protegidas
+app.use('/app', requireLogin);
+app.use('/home', requireLogin);
+app.use('/components/loginform', requireLogin);
+app.use('/app', requireLogin);
+
 //rutas para alumnos
 app.get('/alumnos', async (req, res) => {
     try {
@@ -178,10 +198,6 @@ app.post("/login", async (req, res) => {
       res.status(500).json({ message: 'Error al iniciar sesión' });
     }
   });
-
-
-
-
 
 app.listen(PORT, () => {
   console.log(`El servidor está encendido en el puerto http://localhost:${PORT}`);

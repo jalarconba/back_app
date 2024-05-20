@@ -19,7 +19,7 @@ app.get('/alumnos', async (req, res) => {
         res.status(500).send('Error al obtener los alumnos');
     }
 });
-
+// RUTA PARA AGREGAR ALUMNO
 app.post("/alumnos", async (req, res) => {
     const { rut, nombres, apellido_paterno, apellido_materno, correo_electronico, fecha_nacimiento, curso } = req.body;
     try {
@@ -32,7 +32,7 @@ app.post("/alumnos", async (req, res) => {
         res.status(500).json({ message: 'Error al crear alumno' });
     }
 });
-
+// RUTA PARA ACTUALIZAR ALUMNO
 app.put("/alumnos/:id", async (req, res) => {
     const id = req.params.id;
     const { rut, nombres, apellido_paterno, apellido_materno, correo_electronico, fecha_nacimiento, curso } = req.body;
@@ -46,7 +46,7 @@ app.put("/alumnos/:id", async (req, res) => {
         res.status(500).json({ message: 'Error al actualizar alumno' });
     }
 });
-
+// RUTA PARA ELIMINAR ALUMNO
 app.delete("/alumnos/:id", async (req, res) => {
     const id = req.params.id;
     try {
@@ -157,6 +157,27 @@ app.delete('/apoderados/:id', async (req, res) => {
         res.status(500).json({ message: 'Error al eliminar apoderado' });
     }
 });
+// Endpoint para iniciar sesión
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+    
+    try {
+      // Consulta en la base de datos para verificar las credenciales
+      const query = 'SELECT * FROM usuarios WHERE username = $1 AND password = $2';
+      const result = await pool.query(query, [username, password]);
+  
+      if (result.rows.length > 0) {
+        // Credenciales válidas, devuelve un token de sesión (aquí podrías usar JWT)
+        res.status(200).json({ message: 'Inicio de sesión exitoso' });
+      } else {
+        // Credenciales inválidas
+        res.status(401).json({ message: 'Credenciales inválidas' });
+      }
+    } catch (err) {
+      console.error("Error al iniciar sesión:", err);
+      res.status(500).json({ message: 'Error al iniciar sesión' });
+    }
+  });
 
 
 

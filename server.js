@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import pool from "./db/conexionDB.js";
+// import { requireLogin } from "./requiereLogin.js"; 
 
 const app = express();
 app.use(cors());
@@ -8,25 +9,11 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
 
-
-
-// middleware de autenticación
-const requireLogin = (req, res, next) => {
-    // verifica si el usuario tiene una sesión activa
-    if (req.session && req.session.user) {
-        // si el usuario tiene una sesión activa, permite el acceso a la siguiente ruta
-        next();
-    } else {
-        // si el usuario no tiene una sesión activa, redirige al inicio de sesión
-        res.redirect('/login');
-    }
-};
-
-// Aplica el middleware de autenticación a las rutas protegidas
-app.use('/app', requireLogin);
-app.use('/home', requireLogin);
-app.use('/components/loginform', requireLogin);
-app.use('/app', requireLogin);
+// // Aplica el middleware de autenticación a las rutas protegidas
+// app.use('/app', requireLogin);
+// app.use('/home', requireLogin);
+// app.use('/components/loginform', requireLogin);
+// app.use('/login', requireLogin);
 
 //rutas para alumnos
 app.get('/alumnos', async (req, res) => {
